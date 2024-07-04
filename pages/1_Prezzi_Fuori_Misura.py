@@ -62,7 +62,8 @@ colore = [
     'C_COLANTA-Colore anta / pannello esterno',
     'C_COLRIPSPALLA-Colore ripiano spalla',
     'C_COLANTAINT-Colore anta / pannello inte',
-    'C_COLFASC-Colore Fascia'
+    'C_COLFASC-Colore Fascia',
+    'C_COLTELAIO-Colore telaio'
 ]
 
 altezza = [
