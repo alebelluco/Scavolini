@@ -1,6 +1,3 @@
-# Aggiungere spessore e togliere B2B
-
-
 import streamlit as st 
 import pandas as pd 
 import numpy as np
@@ -11,34 +8,23 @@ from datetime import datetime as dt
 
 
 st.set_page_config(layout='wide')
-st.title('Sollecito Lotti e Fuori Misura')
+st.title('Ordine Commesse')
 
-path = st.file_uploader('Caricare ZMM11')
+path = st.file_uploader('Caricare ZSD67')
 if not path:
     st.stop()
 
-path2 = st.file_uploader('ZSD67')
-if not path2:
-    st.stop()
+zsd67 = pd.read_excel(path)
 
-zmm11 = pd.read_excel(path) # serve per il campo b2b
-zsd67 = pd.read_excel(path2) # file principale
 
-zmm11['key'] = [str(zmm11['Doc.acquisti'].iloc[i])+str(zmm11['Pos'].iloc[i]) for i in range(len(zmm11))]
-zsd67['key'] = [str(zsd67['Numero'].iloc[i])+str(zsd67['Posizione'].iloc[i]) for i in range(len(zsd67))]
-zsd67 = zsd67.merge(zmm11[['key','Qtà B2B']], how='left', left_on = 'key', right_on = 'key')
-zsd67 = zsd67[zsd67['Qtà B2B']==0]
-
-# Layout di esportazione
 
 layout = {
-    'output' : ['Materiale','Descrizione doc.','UM','Quantità','Numero',
+    'output' : ['Materiale','Descrizione mat.','UM','Quantità','Numero',
                 'Posizione','Tp.Doc','Data documento','Data consegna','Intestatario',
                 'Numero OdV','Pos. OdV','Dt. consegna OdV','colore','finitura','altezza','larghezza','spessore','testo']
 }
 
-# unione colonna colore
-# ----------------------------------
+# unione colonne
 
 colonne_colore = [
     'C_COL1-Colore frontale',
@@ -92,7 +78,6 @@ spessore = [
     'C_SPESSORE-Spessore'
 ]
 
-
 note_testo = [
     'C_NOTATESTO1-Nota testo 1',
     'C_NOTATESTO2-Nota testo 2',
@@ -108,7 +93,6 @@ dp.unisci_colonne(zsd67,larghezza,'larghezza')
 dp.unisci_colonne(zsd67,spessore, 'spessore')
 dp.unisci_colonne(zsd67,note_testo,'testo_appoggio')
 
-
 zsd67['colore'] = [str.replace(zsd67['colore'].iloc[i],'ZZ_Non Definito','') for i in range(len(zsd67))]
 
 # aggiustamento formati data
@@ -119,20 +103,10 @@ zsd67['Dt. consegna OdV'] = [dt.date(zsd67['Dt. consegna OdV'].iloc[i]).strftime
 # aggiunta colonna testo dove colore mancante
 zsd67['testo'] = np.where(zsd67['colore'].astype(str)=='', zsd67['testo_appoggio'],'')
 
-st.subheader('ZSD67')
-st.dataframe(zsd67[layout['output']])
-
-fornitori = list(zsd67['Intestatario'].unique())
-
-st.subheader('Dowload file excel', divider = 'red')
-
-# propone un pulsante per ogni fornitore per scaricare il file excel
-for forn in fornitori:
-    name = f'{forn}.xlsx'
-    df = zsd67[zsd67.Intestatario == forn]
-    df = df[layout['output']]
-    st.write(f'{forn}')
-    dp.scarica_excel(df,name)
-    st.divider()
+st.subheader('Output',divider='red')
+st.write(zsd67[layout['output']])
 
 
+st.subheader('Download Excel', divider='red')
+
+dp.scarica_excel(zsd67[layout['output']],'Ordine_commesse.xlsx')
