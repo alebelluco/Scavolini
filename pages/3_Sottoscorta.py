@@ -6,7 +6,6 @@ from datetime import datetime as dt
 
 st.set_page_config(layout='wide')
 st.title('Sottoscorta')
-st.write('Output: elenco delle righe suddivise per fornitore')
 
 layout = {
     'output':['Ragione sociale','Materiale','Definizione',
@@ -35,13 +34,19 @@ for i in range(len(zmm28)):
 st.dataframe(zmm28[layout['output']])
 
 fornitori = list(zmm28['Ragione sociale'].unique())
-st.subheader('Dowload file excel', divider = 'red')
+st.subheader('Dowload file', divider = 'red')
 
-# propone un pulsante per ogni fornitore per scaricare il file excel
-for forn in fornitori:
-    name = f'{forn}.xlsx'
-    df = zmm28[zmm28['Ragione sociale'] == forn]
-    df = df[layout['output']]
-    st.write(f'{forn}')
-    dp.scarica_excel(df,name)
-    st.divider()
+df_dict = {}
+i=0
+for fornitore in fornitori:
+    i+=1
+    df_fil = zmm28[zmm28['Ragione sociale'] == fornitore][layout['output']]
+    df_dict[f'{fornitore}.xlsx']= dp.create_excel_file(df_fil,f'{fornitore}.xlsx')
+    
+zip_data = dp.create_zip_file(df_dict)
+st.download_button(
+    label="Scarica file zip",
+    data=zip_data,
+    file_name='files.zip',
+    mime='application/zip'
+)

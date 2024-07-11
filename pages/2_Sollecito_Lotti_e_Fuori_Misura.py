@@ -123,16 +123,24 @@ st.subheader('ZSD67')
 st.dataframe(zsd67[layout['output']])
 
 fornitori = list(zsd67['Intestatario'].unique())
+st.subheader('Dowload file', divider = 'red')
 
-st.subheader('Dowload file excel', divider = 'red')
+# Download massivo
 
-# propone un pulsante per ogni fornitore per scaricare il file excel
-for forn in fornitori:
-    name = f'{forn}.xlsx'
-    df = zsd67[zsd67.Intestatario == forn]
-    df = df[layout['output']]
-    st.write(f'{forn}')
-    dp.scarica_excel(df,name)
-    st.divider()
+fornitori = list(zsd67['Intestatario'].unique())
+df_dict = {}
+i=0
+for fornitore in fornitori:
+    i+=1
+    df_fil = zsd67[zsd67.Intestatario == fornitore][layout['output']]
+    df_dict[f'{fornitore}.xlsx']= dp.create_excel_file(df_fil,f'{fornitore}.xlsx')
+    
+zip_data = dp.create_zip_file(df_dict)
+st.download_button(
+    label="Scarica file zip",
+    data=zip_data,
+    file_name='files.zip',
+    mime='application/zip'
+)
 
 
