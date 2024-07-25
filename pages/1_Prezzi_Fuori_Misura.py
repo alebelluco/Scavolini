@@ -14,6 +14,7 @@ layout = {
     'Output':['Numero','Posizione','prezzo'],
 }
 
+
 legame_chiavi ={
     "400020 TERENZI VITTORIO &C.SNC DI T.S":['Intestatario','Materiale','colore'],
     "400089 FAB SRL":['Intestatario','Materiale','colore'],
@@ -46,6 +47,10 @@ if not path:
 
 df = pd.read_excel(path)
 db_prezzi = pd.read_excel(path2)
+
+db_prezzi['Mag_fissa']  = db_prezzi['Mag_fissa'].fillna(0)
+db_prezzi['Mag_var']  = db_prezzi['Mag_var'].fillna(0)
+db_prezzi['Soglia_mag']  = db_prezzi['Soglia_mag'].fillna(9999)
 
 # Unione colonne
     
@@ -119,16 +124,17 @@ except:
     pass
 
 dp.crea_chiave(df,legame_chiavi)
-
 db_prezzi['key']=[str(db_prezzi.Fornitore.iloc[i])+str(db_prezzi.CONCATENA.iloc[i]) for i in range(len(db_prezzi))]
-df = df.merge(db_prezzi[['key','VAL.MINIMO','PREZZO AL MQ','Soglia']], how='left', left_on='key', right_on='key')
+df = df.merge(db_prezzi[['key','VAL.MINIMO','PREZZO AL MQ','Soglia','Mag_fissa','Mag_var','Soglia_mag']], how='left', left_on='key', right_on='key')
 
-df['prezzo'] = np.where(df['superficie']<df['Soglia'],df['VAL.MINIMO'],df['PREZZO AL MQ']*df['superficie']).round(2)
+
+df['prezzo'] = np.where(df['superficie']<df['Soglia'],df['VAL.MINIMO']+df['Mag_fissa'],df['PREZZO AL MQ']*df['superficie']+df['Mag_fissa']).round(2)
+df['prezzo'] = np.where(df['altezza']>df['Soglia_mag'],df['prezzo']+df['Mag_var'],df['prezzo'])
 df['prezzo'] = df['prezzo'].astype(str)
 
 df['prezzo'] = [str.replace(df['prezzo'].iloc[i],'.',',') for i in range(len(df))]
 
-st.write('df', df)
+#st.write('df', df)
 #df = df.drop(columns=['key'])
 
 sx, dx = st.columns([1,1])
