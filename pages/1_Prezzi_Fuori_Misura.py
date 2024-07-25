@@ -129,7 +129,8 @@ df = df.merge(db_prezzi[['key','VAL.MINIMO','PREZZO AL MQ','Soglia','Mag_fissa',
 
 
 df['prezzo'] = np.where(df['superficie']<df['Soglia'],df['VAL.MINIMO']+df['Mag_fissa'],df['PREZZO AL MQ']*df['superficie']+df['Mag_fissa']).round(2)
-df['prezzo'] = np.where(df['altezza']>df['Soglia_mag'],df['prezzo']+df['Mag_var'],df['prezzo'])
+df['prezzo'] = np.where((df['altezza']>df['Soglia_mag']),df['prezzo']+df['Mag_var'],df['prezzo'])
+df['prezzo'] = np.where((df['larghezza']>df['Soglia_mag']),df['prezzo']+df['Mag_var'],df['prezzo'])
 df['prezzo'] = df['prezzo'].astype(str)
 
 df['prezzo'] = [str.replace(df['prezzo'].iloc[i],'.',',') for i in range(len(df))]
