@@ -32,7 +32,7 @@ legame_chiavi ={
     "400525 VETR. ARTIST.ARTIGIANA GLASS DI LUC":['Intestatario','Materiale','colore','finitura'],
     "400510 G. & D. S.P.A.":['Intestatario','Materiale','colore','finitura'],
     "400423 ATLANTIS SRL":['Intestatario','Materiale','colore','finitura'],
-    "400109 DMM SPA":['Intestatario','Materiale'] # non era disponibile, utilizzato il valore più frequente
+    "400109 DMM SPA":['Intestatario','Materiale'], # non era disponibile, utilizzato il valore più frequente
     "400119 VITEMPER SRL":['Intestatario','Materiale']
 }
 
