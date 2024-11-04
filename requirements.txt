@@ -2,12 +2,8 @@ streamlit
 pandas
 plotly
 numpy
-matplotlib
 plotly-express
-collection
 openpyxl
-matplotlib-inline
 ipython
 xlrd
-folium
 xlsxwriter
