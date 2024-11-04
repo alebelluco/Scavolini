@@ -3,7 +3,6 @@ pandas
 plotly
 numpy
 matplotlib
-requests
 plotly-express
 collection
 openpyxl
@@ -11,7 +10,4 @@ matplotlib-inline
 ipython
 xlrd
 folium
-streamlit_folium
-openrouteservice
-PyGithub
 xlsxwriter
