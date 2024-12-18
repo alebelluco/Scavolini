@@ -34,8 +34,8 @@ legame_chiavi ={
     "400423 ATLANTIS SRL":['Intestatario','Materiale','colore','finitura'],
     "400109 DMM SPA":['Intestatario','Materiale'], # non era disponibile, utilizzato il valore più frequente
     "400119 VITEMPER SRL":['Intestatario','Materiale'],
-    "400049 MEDIA PROFILI S.R.L.":['Intestatario','colore'],
-    "400073 MOSIAN & CO . SRL":['Intestatario','colore']
+    "400049 MEDIA PROFILI S.R.L.":['Intestatario','Materiale','colore'],
+    "400073 MOSIAN & CO . SRL":['Intestatario','Materiale','colore']
 }
 
 
