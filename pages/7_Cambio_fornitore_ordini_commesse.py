@@ -16,7 +16,7 @@ if not path:
 
 zsd67 = pd.read_excel(path)
 
-flat = pd.read_excel('https://github.com/alebelluco/Scavolini/blob/main/pages/flat.xlsx?=True')
+flat = pd.read_excel('https://github.com/alebelluco/Scavolini/blob/main/pages/flat.xlsx?=True', engine='openpyxl')
 flat
 codici_speciali = list(flat['Articolo'])
 
