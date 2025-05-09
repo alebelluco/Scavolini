@@ -17,8 +17,8 @@ if not path:
 zsd67 = pd.read_excel(path)
 
 path_soeciale = st.file_uploader('Caricare elenco codici speciali')
-    if not path:
-        st.stop() 
+if not path:
+    st.stop() 
 
 flat = pd.read_excel(path_speciale)
 codici_speciali = list(flat['Articolo'])
