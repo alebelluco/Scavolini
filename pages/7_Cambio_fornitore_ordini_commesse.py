@@ -124,7 +124,7 @@ with st.expander('OdV con codici speciali'):
     st.write((odv_spec))
 
 st.subheader('Output: OdV con fornitori aggiornati')
-st.subheader()
+st.divider()
 
 spec_all = zsd67[[any(odv == test for odv in odv_spec) for test in zsd67['Numero OdV']]]
 spec_all = spec_all.merge(fornitori_change, how='left', left_on='Numero OdV', right_on='Numero OdV')
