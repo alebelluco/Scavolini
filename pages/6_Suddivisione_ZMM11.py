@@ -15,12 +15,23 @@ if not path:
 
 zmm11 = pd.read_excel(path) 
 
-layout = {
-    'output' : ['Materiale','Descrizione doc.','UM','Quantità','Numero',
-                'Posizione','Tp.Doc','Data documento','Data consegna','Intestatario',
-                'Numero OdV','Pos. OdV','Dt. consegna OdV','colore','finitura','altezza','larghezza','spessore','testo']
-}
-
+layout = ["Buyer",
+        "Fornitore",
+        "Ragione sociale",
+        "Tp doc.",
+        "Doc.acquisti",
+        "Pos",
+        "Materiale",
+        "Definizione",
+        "Articolo fornitore",
+        "C_MODACQ",
+        "Kanban",
+        "Data ordine",
+        "Qtà ordine",
+        "Qtà cons.",
+        "Qtà residua",
+        "Qtà B2B",
+        "Data consegna"]
 # unione colonna colore
 # ----------------------------------
 
@@ -92,7 +103,7 @@ df_dict = {}
 i=0
 for fornitore in fornitori:
     i+=1
-    df_fil = zmm11[zmm11['Ragione sociale'] == fornitore]
+    df_fil = zmm11[zmm11['Ragione sociale'] == fornitore][layout]
     df_dict[f'{fornitore}.xlsx']= dp.create_excel_file(df_fil,f'{fornitore}.xlsx')
     
 zip_data = dp.create_zip_file(df_dict)
