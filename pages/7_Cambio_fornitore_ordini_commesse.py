@@ -16,8 +16,11 @@ if not path:
 
 zsd67 = pd.read_excel(path)
 
-flat = pd.read_excel('https://github.com/alebelluco/Scavolini/blob/main/pages/flat.xlsx?=True', engine='xlrd')
-flat
+path_soeciale = st.file_uploader('Caricare elenco codici speciali')
+    if not path:
+        st.stop() 
+
+flat = pd.read_excel(path_speciale)
 codici_speciali = list(flat['Articolo'])
 
 layout = {
