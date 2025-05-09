@@ -16,7 +16,7 @@ if not path:
 
 zsd67 = pd.read_excel(path)
 
-flat = pd.read_excel('/Users/Alessandro/Documents/AB/Clienti/ADI!/Scavolini/Acquisti/Estrazione/Luca Bozzi/ordine_commesse_new/flat.xlsx')
+flat = pd.read_excel('flat.xlsx')
 flat
 codici_speciali = list(flat['Articolo'])
 
