@@ -94,6 +94,9 @@ note_testo = [
     'C_NOTATESTO4-Nota testo 4'
 ]
 
+zmm11['Data ordine'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data ordine']]
+zmm11['Data consegna'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data consegna']]
+
 zmm11
 now = str((dt.now().date())).replace('-','')
 # Download massivo
