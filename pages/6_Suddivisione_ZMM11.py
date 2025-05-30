@@ -122,14 +122,7 @@ note_testo = [
 zmm11['Data ordine'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data ordine']]
 zmm11['Data consegna'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data consegna']]
 if mto:
-    #zmm11['Data Cons.'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data Cons.'] if zmm11['Tp doc.']=='ZMTO']
-    for i in range(len(zmm11)):
-        data_test = zmm11['Data Cons.'].iloc[i]
-        if len(str(data_test)) > 5:
-            zmm11['Data Cons.'].iloc[i] = dt.strftime(data_test, format='%d/%m/%Y')
-        else:
-            zmm11['Data Cons.'].iloc[i] = data_test
-            
+   zmm11['Data Cons.'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data Cons.'] if len(str(data))>5]
             
 
 
