@@ -7,7 +7,7 @@ from utils import dataprep as dp
 from datetime import datetime as dt
 
 st.set_page_config(layout='wide')
-st.title('Suddivisione fornitori ZMM11')
+st.title('Solleciti JIT - MTO')
 
 path = st.file_uploader('Caricare ZMM11')
 if not path:
