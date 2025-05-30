@@ -14,7 +14,7 @@ if not path:
     st.stop()
 
 zmm11 = pd.read_excel(path) 
-
+mto = False
 if st.checkbox('MTO'):
     mto=True
     layout = ["Buyer",
