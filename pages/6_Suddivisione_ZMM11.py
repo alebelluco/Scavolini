@@ -15,7 +15,28 @@ if not path:
 
 zmm11 = pd.read_excel(path) 
 
-layout = ["Buyer",
+if st.checkbox('MTO'):
+    layout = ["Buyer",
+        "Fornitore",
+        "Ragione sociale",
+        "Tp doc.",
+        "Doc.acquisti",
+        "Pos",
+        "Materiale",
+        "Definizione",
+        "Articolo fornitore",
+        "UM",
+        "N° Ordine",
+        "Posizione",
+        "Data ordine",
+        "Qtà ordine",
+        "Qtà cons.",
+        "Qtà residua",
+        "Qtà B2B",
+        "Data Cons.",
+        "Data consegna"]
+else:
+    layout = ["Buyer",
         "Fornitore",
         "Ragione sociale",
         "Tp doc.",
@@ -32,8 +53,11 @@ layout = ["Buyer",
         "Qtà residua",
         "Qtà B2B",
         "Data consegna"]
+
+
 # unione colonna colore
 # ----------------------------------
+
 
 colonne_colore = [
     'C_COL1-Colore frontale',
