@@ -122,7 +122,7 @@ note_testo = [
 zmm11['Data ordine'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data ordine']]
 zmm11['Data consegna'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data consegna']]
 if mto:
-    zmm11['Data Cons.'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data Cons.'] if zmm1['Tp doc.']=='ZMTO']
+    zmm11['Data Cons.'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data Cons.'] if zmm11['Tp doc.']=='ZMTO']
 
 
 
