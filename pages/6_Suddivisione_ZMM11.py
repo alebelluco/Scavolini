@@ -16,6 +16,7 @@ if not path:
 zmm11 = pd.read_excel(path) 
 
 if st.checkbox('MTO'):
+    mto=True
     layout = ["Buyer",
         "Fornitore",
         "Ragione sociale",
@@ -33,8 +34,8 @@ if st.checkbox('MTO'):
         "Qtà cons.",
         "Qtà residua",
         "Qtà B2B",
-        "Data Cons.",
-        "Data consegna"]
+        "Data consegna",
+        "Data Cons."]
 else:
     layout = ["Buyer",
         "Fornitore",
@@ -120,6 +121,10 @@ note_testo = [
 
 zmm11['Data ordine'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data ordine']]
 zmm11['Data consegna'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data consegna']]
+if mto:
+    zmm11['Data Cons.'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data Cons.']]
+
+
 
 zmm11
 now = str((dt.now().date())).replace('-','')
