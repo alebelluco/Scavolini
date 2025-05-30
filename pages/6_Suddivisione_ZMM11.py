@@ -122,7 +122,10 @@ note_testo = [
 zmm11['Data ordine'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data ordine']]
 zmm11['Data consegna'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data consegna']]
 if mto:
-   zmm11['Data Cons.'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11['Data Cons.'] if len(str(data))>5]
+    zmm11_mto = zmm11[zmm11['Data Cons.'].astype(str) != 'NaT']
+    zmm11_mts = zmm11[zmm11['Data Cons.'].astype(str) == 'NaT']
+    zmm11_mto['Data Cons.'] = [dt.strftime(data, format='%d/%m/%Y') for data in zmm11_mto['Data Cons.']]
+    zmm11 = pd.concat([zmm11_mto, zmm11_mts])
             
 
 
