@@ -28,7 +28,7 @@ if not path:
 df = pd.read_excel(path)
 db_prezzi = pd.read_excel(path2)
 config = pd.read_excel(path2, sheet_name='Configurazione')
-st.write(config)
+
 config['key']=[str.split(campo, ',') for campo in config.Campi]
 
 legame_chiavi = dict(zip(config['Ragione Sociale'], config.key))
