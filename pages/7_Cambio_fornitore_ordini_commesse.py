@@ -24,7 +24,7 @@ if not path_speciale:
 flat = pd.read_excel(path_speciale, sheet_name='codici')
 codici_speciali = list(flat['Articolo'])
 
-esclusioni = pd.read_excel(path_flat, sheet_name='esclusioni')
+esclusioni = pd.read_excel(path_speciale, sheet_name='esclusioni')
 keyword_exc =list(esclusioni.keywords)
 
 zsd67 = zsd67[[all(str.lower(keyword) not in str.lower(check) for keyword in keyword_exc) for check in zsd67['Descrizione mat.']]]
