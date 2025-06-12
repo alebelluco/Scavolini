@@ -15,29 +15,6 @@ layout = {
 }
 
 
-legame_chiavi ={
-    "400020 TERENZI VITTORIO &C.SNC DI T.S":['Intestatario','Materiale','colore'],
-    "400089 FAB SRL":['Intestatario','Materiale','colore'],
-    "400642 M.B.F. S.R.L.":['Intestatario','Materiale','colore','spessore'], 
-    "400592 BECA GROUP S.R.L.":['Intestatario','Materiale'],
-    "400545 VETROTEC SRL":['Intestatario','Materiale'],
-    "400763 ARTI DEL VETRO SRL":['Intestatario','Materiale','mat'], 
-    "400516 PANTAREI SRL":['Intestatario','Materiale'],
-    "400844 STIVAL SRL":['Intestatario','Materiale'],
-    "400624 FULIGNA & SENSOLI S.R.L.":['Intestatario','Materiale'],
-    "400817 PESARO GLASS S.R.L.":['Intestatario','Materiale'],
-    "400058 SCILM SPA":['Intestatario','Materiale'],
-    "400782 ERREBIELLE COMPONENTS SRL":['Intestatario','Materiale','colore'],
-    "400789 L.G. S.R.L.":['Intestatario','Materiale','colore','finitura'], # la colonna finitura va aggiunta
-    "400525 VETR. ARTIST.ARTIGIANA GLASS DI LUC":['Intestatario','Materiale','colore','finitura'],
-    "400510 G. & D. S.P.A.":['Intestatario','Materiale','colore','finitura'],
-    "400423 ATLANTIS SRL":['Intestatario','Materiale','colore','finitura'],
-    "400109 DMM SPA":['Intestatario','Materiale'], # non era disponibile, utilizzato il valore più frequente
-    "400119 VITEMPER SRL":['Intestatario','Materiale'],
-    "400049 MEDIA PROFILI S.R.L.":['Intestatario','Materiale','colore'],
-    "400073 MOSIAN & CO . SRL":['Intestatario','Materiale','colore']
-}
-
 
 
 path2 = st.file_uploader('Caricare db prezzi')
@@ -50,6 +27,12 @@ if not path:
 
 df = pd.read_excel(path)
 db_prezzi = pd.read_excel(path2)
+config = pd.read_excel(path2, sheet_name='Configurazione')
+
+config['key']=[str.split(campo, ',') for campo in config.Campi]
+
+legame_chiavi = dict(zip(config['Ragione Sociale'], config.key))
+
 
 db_prezzi['Mag_fissa']  = db_prezzi['Mag_fissa'].fillna(0)
 db_prezzi['Mag_var']  = db_prezzi['Mag_var'].fillna(0)
@@ -153,6 +136,9 @@ with dx:
     st.dataframe(mancanti[layout['Work2']])
 
 dp.scarica_excel(df[layout['Output']],'output.xlsx')
+
+
+
 
 
 
