@@ -1,3 +1,6 @@
+# versione aggiornata il 11/07/2025
+# aggiunta la possibilità di scaricare l'output suddiviso per fornitore
+
 import streamlit as st 
 import pandas as pd 
 import numpy as np
@@ -110,3 +113,30 @@ st.write(zsd67[layout['output']])
 st.subheader('Download Excel', divider='red')
 
 dp.scarica_excel(zsd67[layout['output']],'Ordine_commesse.xlsx')
+
+
+fornitori = list(zsd67['Intestatario'].unique())
+df_dict = {}
+i=0
+for fornitore in fornitori:
+    i+=1
+    df_fil = zsd67[zsd67['Intestatario'] == fornitore][layout['output']]
+    df_dict[f'{fornitore}.xlsx']= dp.create_excel_file(df_fil,f'{fornitore}.xlsx')
+    
+zip_data = dp.create_zip_file(df_dict)
+
+
+st.subheader('Download Zip Controllo Lotti', divider='red')
+st.write('Viene creata una cartella contenente un file excel per ogni fornitore')
+st.download_button(
+    label="Scarica file zip",
+    data=zip_data,
+    file_name='files.zip',
+    mime='application/zip'
+)
+
+
+
+
+
+
