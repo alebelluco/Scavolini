@@ -11,7 +11,7 @@ from datetime import datetime as dt
 
 
 st.set_page_config(layout='wide')
-st.title('Ordine Commesse')
+st.title('Ordine Commesse Unpack')
 
 path = st.file_uploader('Caricare ZSD67')
 if not path:
@@ -186,7 +186,7 @@ for categoria in categorie:
 zip_data = dp.create_zip_file(df_dict)
 
 
-st.subheader('Download Zip Controllo Lotti', divider='red')
+st.subheader('Download Zip', divider='red')
 st.write('Viene creata una cartella contenente un file excel per ogni fornitore')
 st.download_button(
     label="Scarica file zip",
