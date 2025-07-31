@@ -325,7 +325,7 @@ if st.radio('Fornitore', options=['LG','G&D']) == 'G&D':
                             "20395222","20395223","20395224","20395225","20395226","20396131","20398849"]
 
     for i in range(len(zsd67)):
-        art_check = zsd67['Materiale'].iloc[i]
+        art_check = zsd67['Materiale'].astype(str).iloc[i]
         if any(codice == art_check for codice in mobil_giorno_smontati) :
             zsd67.categoria.iloc[i] = 'Mobiletti giorno smontati'
             
