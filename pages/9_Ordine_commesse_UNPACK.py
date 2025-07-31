@@ -2,6 +2,7 @@
 # aggiunta la possibilità di scaricare l'output suddiviso per fornitore
 # inserite regole per LG
 
+
 import streamlit as st 
 import pandas as pd 
 import numpy as np
