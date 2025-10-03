@@ -255,13 +255,13 @@ def dividi_categorie_lg(zsd67, codici_carrellino):
         elif zsd67['Tp.Doc'].iloc[i] == 'ZMTO': # MTO
 
             if codice[:3] == '211' or testo[:3]=='TAP':
-                zsd67.categoria.iloc[i] = 'Pensili giorno fuori misura'
+                zsd67.categoria.iloc[i] = 'Pensili giorno'
 
             if any(testo[:3] == voce for voce in struttura) and (str(codice)[:1]=='2'):
-                zsd67.categoria.iloc[i] = 'Fianchi + struttura fuori misura'
+                zsd67.categoria.iloc[i] = 'Fianchi + struttura + schienali'
 
             if (testo[:2]=='FR' or testo[:3]=='PAN' or testo[:3]=='FAS' or testo[:3]=='COP') and zsd67['C/lav'].iloc[i] != 'L' and 'RIGAT' not in testo :
-                zsd67.categoria.iloc[i] = 'Ante e pannelli fuori misura'
+                zsd67.categoria.iloc[i] = 'Ante e pannelli'
 
             if 'RIGAT' in testo:
                 zsd67.categoria.iloc[i] = 'Dogato'
@@ -270,16 +270,16 @@ def dividi_categorie_lg(zsd67, codici_carrellino):
                 zsd67.categoria.iloc[i] = 'Schienali e Piani'
 
             if (((testo[:3]=='SCH' or testo[:3]=='PIA') and  (str(codice)[:1]=='7')) or str(codice)[:1]=='7' or testo[:3]=='PAN') and 'DOG' not in testo:
-                zsd67.categoria.iloc[i] = 'Schienali Piani e Pannelli fuori misura'
+                zsd67.categoria.iloc[i] = 'Fianchi + struttura + schienali'
             
             if (((testo[:3]=='SCH' or testo[:3]=='PIA') and  (str(codice)[:1]=='7')) or str(codice)[:1]=='7' or testo[:3]=='PAN') and 'DOG' in testo:
-                zsd67.categoria.iloc[i] = 'Schienali Piani e Pannelli fuori misura dogati'
+                zsd67.categoria.iloc[i] = 'Schienali Piani e Pannelli dogati'
 
             if ('GIO' in testo) and ('GRIGIO' not in testo) and ('SOGGIORNO' not in testo) and (str(codice)[:3]!='211'):
-                zsd67.categoria.iloc[i] = 'Elementi struttura pensile giorno fuori misura'
+                zsd67.categoria.iloc[i] = 'Elementi struttura pensile giorno'
 
             if ('GIO' in testo) and ('GRIGIO' not in testo) and ('SOGGIORNO' not in testo) and (str(codice)[:3]=='211'):
-                zsd67.categoria.iloc[i] = 'Pensili giorno fuori misura'
+                zsd67.categoria.iloc[i] = 'Pensili giorno'
 
 
             pass
