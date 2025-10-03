@@ -373,7 +373,7 @@ else:
             zsd67.colore.iloc[i] = 'Non trovato'
     
     zsd67 = zsd67.merge(flat_colori, how='left', left_on='colore', right_on='Colore')
-    zsd67['T'] = np.where(zsd67.Categoria == 'Carrellino', 'T43', zsd67['T'])
+    zsd67['T'] = np.where(zsd67.categoria == 'Carrellino', 'T43', zsd67['T'])
     zsd67['T'] = zsd67['T'].fillna('T20')
 
     # raggruppamento codici Jeometrica
