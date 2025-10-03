@@ -215,10 +215,10 @@ def dividi_categorie_lg(zsd67, codici_carrellino):
                 zsd67.categoria.iloc[i] = 'Pensili giorno'
 
             if any(testo[:3] == voce for voce in struttura) and (str(codice)[:1]=='2') :
-                zsd67.categoria.iloc[i] = 'Fianchi + struttura'
+                zsd67.categoria.iloc[i] = 'Fianchi + struttura + schienali'
 
             if (testo[:2]=='FR' or testo[:3]=='FAS' or testo[:3]=='COP') and zsd67['C/lav'].iloc[i] != 'L' and 'RIGAT' not in testo:
-                zsd67.categoria.iloc[i] = 'Ante'
+                zsd67.categoria.iloc[i] = 'Ante e pannelli'
 
             if 'RIGAT' in testo:
                 zsd67.categoria.iloc[i] = 'Dogato'
