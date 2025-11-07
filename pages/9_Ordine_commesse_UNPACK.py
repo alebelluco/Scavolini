@@ -518,6 +518,7 @@ elif fornitore_selected == 'Terenzi':
     zsd67 = dividi_categorie_terenzi(zsd67)
 
     zsd67 = zsd67[zsd67.categoria != 'Eliminare']
+    zsd67['categoria'] = zsd67['categoria'].fillna('non_categorizzato')
 
 
     st.write(zsd67[['Descrizione mat.','Materiale','Tp.Doc','C/lav','categoria']])
