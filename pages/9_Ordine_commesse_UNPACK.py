@@ -301,6 +301,94 @@ def dividi_categorie_lg(zsd67, codici_carrellino):
     return zsd67
 
 
+def dividi_categorie_terenzi(zsd67):
+    struttura = ['FIA','DIV','SCH','RIP','CIE','FON','ZOC']
+    zsd67['categoria']=None
+    for i in range(len(zsd67)):
+
+        testo = zsd67['Descrizione mat.'].iloc[i]
+        codice = zsd67['Materiale'].iloc[i]
+
+        # prima condizione: fuori misura
+        
+        if zsd67['Tp.Doc'].iloc[i] == 'ZLAC':
+
+            if ('MENS' in testo):
+                zsd67.categoria.iloc[i] = 'Mensole'
+
+            if ('GIO' in testo) and (str(codice)[:3]!='211'):
+                zsd67.categoria.iloc[i] = 'Elementi struttura pensile giorno'
+
+            if (testo[:2] == 'PN') or ('STRIPS' in testo):
+                zsd67.categoria.iloc[i] = 'Life'
+            
+            if ('FENIX' in testo) and ('°' in testo):
+                zsd67.categoria.iloc[i] = 'Frontali DELINEA Fenix'
+            
+            if ('FENIX' in testo) and ('°' not in testo):
+                zsd67.categoria.iloc[i] = 'Frontali e fianchi Fenix'
+            
+            if ('LAM' in testo) and ('°' in testo):
+                zsd67.categoria.iloc[i] = 'Frontali Laminato DELINEA'
+            
+            if ('LAM' in testo) and ('°' not in testo):
+                zsd67.categoria.iloc[i] = 'Frontali e fianchi Laminato'
+
+            if ('DEC' in testo) and ('°' in testo):
+                zsd67.categoria.iloc[i] = 'Frontali Decorativo DELINEA'
+            
+            if ('DEC' in testo) and ('°' not in testo):
+                zsd67.categoria.iloc[i] = 'Elementi Decorativo'
+            
+            if (codice[:3]=='211'):
+                zsd67.categoria.iloc[i] = 'Tavoli'
+
+            if ('COLAZIONE' in testo) or ('SOSTEGNO' in testo):
+                zsd67.categoria.iloc[i] = 'Eliminare'
+
+
+   
+        else: 
+                           
+            if ('MENS' in testo):
+                zsd67.categoria.iloc[i] = 'Mensole'
+
+            if ('PANN' in testo) and ('MONT' in testo):
+                zsd67.categoria.iloc[i] = 'Pannelli montati'
+
+            if ('PANN' in testo) and ('MONT' not in testo):
+                zsd67.categoria.iloc[i] = 'Eliminare'
+            
+            if (testo[:2]=='FR'):
+
+                if ('°' in testo):
+                    zsd67.categoria.iloc[i] ='Frontali fuori misura DELINEA'
+
+                if ('LBM' in testo) or ('LIB' in testo):
+                    zsd67.categoria.iloc[i] ='Frontali fuori misura Decorativo'
+
+                if ('LAM' in testo):
+                    zsd67.categoria.iloc[i] = 'Frontali fuori misura Laminato'
+                
+                if ('FENIX' in testo):
+                    zsd67.categoria.iloc[i] = 'Frontali fuori misura Fenix'
+
+            if (codice[:3]=='211'):
+                zsd67.categoria.iloc[i] = 'Tavoli'
+            
+            if ('COLAZIONE' in testo) or ('SOSTEGNO' in testo):
+                zsd67.categoria.iloc[i] = 'Eliminare'
+
+            
+            
+            # MTO
+
+    return zsd67
+
+
+
+
+
 # RUN divisione categorie ============================================================
 
 fornitore_selected = st.radio('Fornitore', options=['LG','G&D','Terenzi']) 
@@ -422,5 +510,35 @@ elif fornitore_selected =='G&D':
         file_name='files.zip',
         mime='application/zip'
     )
+
+
 elif fornitore_selected == 'Terenzi':
-    "Bozzi FROCIO"
+
+    st.subheader(':red[STAI UTILIZZANDO LE IMPOSTAZIONI PER Terenzi]')
+    zsd67 = dividi_categorie_terenzi(zsd67)
+
+    zsd67 = zsd67[zsd67.categoria != 'Eliminare']
+
+
+    st.write(zsd67[['Descrizione mat.','Materiale','Tp.Doc','C/lav','categoria']])
+
+    df_dict = {}
+    categorie = list(zsd67['categoria'].unique())
+    i=0
+    for categoria in categorie:
+        i+=1
+        df_fil = zsd67[zsd67['categoria'] == categoria][layout['output_gd']]
+        df_dict[f'{categoria}.xlsx']= dp.create_excel_file(df_fil,f'{categoria}.xlsx')
+
+
+    zip_data = dp.create_zip_file(df_dict)
+
+    st.subheader('Download Zip Controllo Lotti', divider='red')
+    st.write('Viene creata una cartella contenente un file excel per ogni fornitore')
+    st.download_button(
+        label="Scarica file zip",
+        data=zip_data,
+        file_name='files.zip',
+        mime='application/zip'
+    )
+    
