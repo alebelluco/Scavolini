@@ -303,7 +303,10 @@ def dividi_categorie_lg(zsd67, codici_carrellino):
 
 # RUN divisione categorie ============================================================
 
-if st.radio('Fornitore', options=['LG','G&D']) == 'G&D':
+fornitore_selected = st.radio('Fornitore', options=['LG','G&D','Terenzi']) 
+
+
+if fornitore_selected == 'G&D':
     st.subheader(':red[STAI UTILIZZANDO LE IMPOSTAZIONI PER G&D]')
     zsd67 = dividi_categorie_gd(zsd67)
     
@@ -354,7 +357,7 @@ if st.radio('Fornitore', options=['LG','G&D']) == 'G&D':
 
 
 
-else:
+elif fornitore_selected =='G&D':
     st.subheader(':red[STAI UTILIZZANDO LE IMPOSTAZIONI PER LG]')
     path_colori = st.file_uploader('caricare il file di abbinamento colori - T')
 
@@ -419,3 +422,5 @@ else:
         file_name='files.zip',
         mime='application/zip'
     )
+elif fornitore_selected == 'Terenzi':
+    "Bozzi FROCIO"
