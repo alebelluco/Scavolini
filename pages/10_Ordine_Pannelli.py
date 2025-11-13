@@ -11,7 +11,7 @@ from datetime import datetime as dt
 
 
 st.set_page_config(layout='wide')
-st.title('Ordine Commesse')
+st.title('Ordine Pannelli fuori misura')
 
 path = st.file_uploader('Caricare ZSD67')
 if not path:
