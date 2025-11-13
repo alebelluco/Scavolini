@@ -445,7 +445,7 @@ if fornitore_selected == 'G&D':
 
 
 
-elif fornitore_selected =='G&D':
+elif fornitore_selected =='LG':
     st.subheader(':red[STAI UTILIZZANDO LE IMPOSTAZIONI PER LG]')
     path_colori = st.file_uploader('caricare il file di abbinamento colori - T')
 
