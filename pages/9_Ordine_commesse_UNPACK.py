@@ -284,7 +284,7 @@ def dividi_categorie_lg(zsd67, codici_carrellino):
 
             pass
 
-        elif zsd67['Tp.Doc'].iloc[i] == 'ZCLA':
+        elif zsd67['Tp.Doc'].iloc[i] == 'ZLAC':
 
             if ('JMT' in testo) and zsd67['C/lav'].iloc[i] == 'L':
 
