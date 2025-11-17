@@ -295,7 +295,7 @@ def dividi_categorie_lg(zsd67, codici_carrellino):
                 zsd67.categoria.iloc[i] = 'Contolavoro'
 
         else:
-            zsd67.categotia.iloc[i] = 'Just in time'
+            zsd67.categoria.iloc[i] = 'Just in time'
 
 
     return zsd67
