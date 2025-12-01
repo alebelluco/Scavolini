@@ -98,7 +98,22 @@ note_testo = [
 ]
 
 
-dp.unisci_colonne(zsd67,colonne_colore,'colore')
+
+def unisci_colonne_sax(df, colonne, nome_nuova_colonna):
+    """
+    Unisce più colonne in una sola, mantenendo solo il primo valore non nullo trovato.
+    Se vengono trovati valori in più colonne, viene mantenuto solo il primo.
+    """
+    def ottieni_primo_valore(row):
+        for col in colonne:
+            if col in df.columns and pd.notna(row[col]) and str(row[col]).strip() != '':
+                return row[col]
+        return ''
+    
+    df[nome_nuova_colonna] = df.apply(ottieni_primo_valore, axis=1)
+
+
+unisci_colonne_sax(zsd67, colonne_colore, 'colore')
 dp.unisci_colonne(zsd67,colonne_finitura,'finitura')
 dp.unisci_colonne(zsd67,altezza,'altezza')
 dp.unisci_colonne(zsd67,larghezza,'larghezza')
