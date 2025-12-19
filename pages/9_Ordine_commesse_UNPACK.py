@@ -21,6 +21,21 @@ if not path:
 
 zsd67 = pd.read_excel(path)
 
+PANNELLI_FM_LOTTI_TERENZI = [
+    7709039,
+    7709050,
+    7709051,
+    7709109,
+    7709121,
+    7709122,
+    7709123,
+    7709124 
+    ]
+
+
+
+
+
 layout = {
     'output' : ['Materiale','Descrizione mat.','UM','Quantità','Numero',
                 'Posizione','Tp.Doc','Data documento','Data consegna','Intestatario',
@@ -301,6 +316,7 @@ def dividi_categorie_lg(zsd67, codici_carrellino):
     return zsd67
 
 
+
 def dividi_categorie_terenzi(zsd67):
     struttura = ['FIA','DIV','SCH','RIP','CIE','FON','ZOC']
     zsd67['categoria']=None
@@ -314,44 +330,47 @@ def dividi_categorie_terenzi(zsd67):
         if zsd67['Tp.Doc'].iloc[i] == 'ZLAC':
 
             if ('MENS' in testo):
-                zsd67.categoria.iloc[i] = 'Mensole'
+                zsd67.categoria.iloc[i] = 'Non ordinato nei lotti'
 
             if ('GIO' in testo) and (str(codice)[:3]!='211'):
                 zsd67.categoria.iloc[i] = 'Elementi struttura pensile giorno'
 
             if (testo[:2] == 'PN') or ('STRIPS' in testo):
-                zsd67.categoria.iloc[i] = 'Life'
+                zsd67.categoria.iloc[i] = 'Fenix + Laminato'
             
             if ('FENIX' in testo) and ('°' in testo):
-                zsd67.categoria.iloc[i] = 'Frontali DELINEA Fenix'
+                zsd67.categoria.iloc[i] = 'Fenix + Laminato'
             
             if ('FENIX' in testo) and ('°' not in testo):
-                zsd67.categoria.iloc[i] = 'Frontali e fianchi Fenix'
+                zsd67.categoria.iloc[i] = 'Fenix + Laminato'
             
             if ('LAM' in testo) and ('°' in testo):
-                zsd67.categoria.iloc[i] = 'Frontali Laminato DELINEA'
+                zsd67.categoria.iloc[i] = 'Fenix + Laminato'
             
             if ('LAM' in testo) and ('°' not in testo):
-                zsd67.categoria.iloc[i] = 'Frontali e fianchi Laminato'
+                zsd67.categoria.iloc[i] = 'Fenix + Laminato'
 
-            if ('DEC' in testo) and ('°' in testo):
-                zsd67.categoria.iloc[i] = 'Frontali Decorativo DELINEA'
+            if ('DEC' in testo) and ('FLUIDA' not in testo):
+                zsd67.categoria.iloc[i] = 'Frontali Decorativo'
+
+            if ('DEC' in testo) and ('FLUIDA' in testo):
+                zsd67.categoria.iloc[i] = 'Frontali Decorativo FLUIDA' 
             
-            if ('DEC' in testo) and ('°' not in testo):
-                zsd67.categoria.iloc[i] = 'Elementi Decorativo'
+            if ('DEC' in testo) and ('MENS' in testo):
+                zsd67.categoria.iloc[i] = 'Non ordinato nei lotti'
             
-            if (codice[:3]=='211'):
-                zsd67.categoria.iloc[i] = 'Tavoli'
+            if (codice[:3]=='211') and ('FLUIDA' not in testo):
+                zsd67.categoria.iloc[i] = 'Non ordinato nei lotti'
 
             if ('COLAZIONE' in testo) or ('SOSTEGNO' in testo):
-                zsd67.categoria.iloc[i] = 'Eliminare'
+                zsd67.categoria.iloc[i] = 'Non ordinato nei lotti'
 
 
    
         else: 
                            
             if ('MENS' in testo):
-                zsd67.categoria.iloc[i] = 'Mensole'
+                zsd67.categoria.iloc[i] = 'Non ordinato nei lotti'
 
             if ('PANN' in testo) and ('MONT' in testo):
                 zsd67.categoria.iloc[i] = 'Pannelli montati'
@@ -359,27 +378,28 @@ def dividi_categorie_terenzi(zsd67):
             if ('PANN' in testo) and ('MONT' not in testo):
                 zsd67.categoria.iloc[i] = 'Eliminare'
             
-            if (testo[:2]=='FR'):
+            if (testo[:2]=='FR') or (testo[:2]=='FI') :
 
                 if ('°' in testo):
-                    zsd67.categoria.iloc[i] ='Frontali fuori misura DELINEA'
+                    zsd67.categoria.iloc[i] ='Decorativo Fuori Misura'
 
-                if ('LBM' in testo) or ('LIB' in testo):
-                    zsd67.categoria.iloc[i] ='Frontali fuori misura Decorativo'
+                if ('LBM' in testo) or ('LIB' in testo) or ('DEC' in testo):
+                    zsd67.categoria.iloc[i] ='Decorativo Fuori Misura'
 
                 if ('LAM' in testo):
-                    zsd67.categoria.iloc[i] = 'Frontali fuori misura Laminato'
+                    zsd67.categoria.iloc[i] = 'Fenix + Laminato Fuori Misura'
                 
                 if ('FENIX' in testo):
-                    zsd67.categoria.iloc[i] = 'Frontali fuori misura Fenix'
+                    zsd67.categoria.iloc[i] = 'Fenix + Laminato Fuori Misura'
 
             if (codice[:3]=='211'):
-                zsd67.categoria.iloc[i] = 'Tavoli'
+                zsd67.categoria.iloc[i] = 'Non ordinato nei lotti'
             
             if ('COLAZIONE' in testo) or ('SOSTEGNO' in testo):
-                zsd67.categoria.iloc[i] = 'Eliminare'
+                zsd67.categoria.iloc[i] = 'Non ordinato nei lotti'
 
-            
+        if any( cod == codice for cod in PANNELLI_FM_LOTTI_TERENZI):
+                            zsd67.categoria.iloc[i] = 'Pannelli FM Lotti'
             
             # MTO
 
