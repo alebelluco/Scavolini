@@ -85,10 +85,10 @@ df['larghezza'] = df['larghezza'].fillna('').str.replace(' mm','', regex=False)
 df['altezza'] = df['altezza'].str.replace(',','.', regex=False)
 df['larghezza'] = df['larghezza'].str.replace(',','.', regex=False)
 
-df['altezza'] = df['altezza'].astype(float)
+df['altezza'] = pd.to_numeric(df['altezza'], errors='coerce')
 
 try:
-    df['larghezza'] = df['larghezza'].astype(float)
+    df['larghezza'] = pd.to_numeric(df['larghezza'], errors='coerce')
 except:
     pass
 
@@ -104,8 +104,8 @@ try:
     df['spessore'] =  df['spessore'].astype(str)
     df['spessore'] = df['spessore'].fillna('').str.replace(' mm','', regex=False)
     df['spessore'] = df['spessore'].str.replace(',','.', regex=False)
-    df['spessore'] = df['spessore'].astype(float)
-    df['spessore'] = df['spessore'].astype(int)
+    df['spessore'] = pd.to_numeric(df['spessore'], errors='coerce')
+    df['spessore'] = df['spessore'].astype('Int64')
 except:
     pass
 
