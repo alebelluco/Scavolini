@@ -75,15 +75,15 @@ dp.unisci_colonne(df,finitura,'finitura')
 dp.unisci_colonne(df,altezza,'altezza')
 dp.unisci_colonne(df,larghezza,'larghezza')
 
-df['colore'] = [str.replace(df['colore'].iloc[i],'ZZ_Non Definito','') for i in range(len(df))]
+df['colore'] = df['colore'].fillna('').str.replace('ZZ_Non Definito','', regex=False)
 
 # Eliminazione mm e modifica virgola in punto
 
-df['altezza'] = [str.replace(df['altezza'].iloc[i],' mm','') for i in range(len(df))]
-df['larghezza'] = [str.replace(df['larghezza'].iloc[i],' mm','') for i in range(len(df))]
+df['altezza'] = df['altezza'].fillna('').str.replace(' mm','', regex=False)
+df['larghezza'] = df['larghezza'].fillna('').str.replace(' mm','', regex=False)
 
-df['altezza'] = [str.replace(df['altezza'].iloc[i],',','.') for i in range(len(df))]
-df['larghezza'] = [str.replace(df['larghezza'].iloc[i],',','.') for i in range(len(df))]
+df['altezza'] = df['altezza'].str.replace(',','.', regex=False)
+df['larghezza'] = df['larghezza'].str.replace(',','.', regex=False)
 
 df['altezza'] = df['altezza'].astype(float)
 
@@ -102,8 +102,8 @@ except:
 try:
     df['spessore'] = df['C_SPESSORE-Spessore']
     df['spessore'] =  df['spessore'].astype(str)
-    df['spessore'] = [str.replace(df['spessore'].iloc[i],' mm','') for i in range(len(df))]
-    df['spessore'] = [str.replace(df['spessore'].iloc[i],',','.') for i in range(len(df))]
+    df['spessore'] = df['spessore'].fillna('').str.replace(' mm','', regex=False)
+    df['spessore'] = df['spessore'].str.replace(',','.', regex=False)
     df['spessore'] = df['spessore'].astype(float)
     df['spessore'] = df['spessore'].astype(int)
 except:
@@ -119,7 +119,7 @@ df['prezzo'] = np.where((df['altezza']>df['Soglia_mag']),df['prezzo']+df['Mag_va
 df['prezzo'] = np.where((df['larghezza']>df['Soglia_mag']),df['prezzo']+df['Mag_var'],df['prezzo'])
 df['prezzo'] = df['prezzo'].astype(str)
 
-df['prezzo'] = [str.replace(df['prezzo'].iloc[i],'.',',') for i in range(len(df))]
+df['prezzo'] = df['prezzo'].fillna('').str.replace('.',',', regex=False)
 
 #st.write('df', df)
 #df = df.drop(columns=['key'])

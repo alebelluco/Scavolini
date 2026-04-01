@@ -96,7 +96,7 @@ dp.unisci_colonne(zsd67,larghezza,'larghezza')
 dp.unisci_colonne(zsd67,spessore, 'spessore')
 dp.unisci_colonne(zsd67,note_testo,'testo_appoggio')
 
-zsd67['colore'] = [str.replace(zsd67['colore'].iloc[i],'ZZ_Non Definito','') for i in range(len(zsd67))]
+zsd67['colore'] = zsd67['colore'].fillna('').str.replace('ZZ_Non Definito','', regex=False)
 
 # aggiustamento formati data
 zsd67['Data documento'] = [dt.date(zsd67['Data documento'].iloc[i]).strftime("%d-%m-%Y") for i in range(len(zsd67))]
