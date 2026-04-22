@@ -68,6 +68,22 @@ colonne_colore = [
     'C_COLSUP1TAV-Colore Superficie 1 tavolo',
 ]
 
+
+colonne_finitura = [
+    'C_FINMUR-Finitura muretto',
+    'C_FINPANNSCH-Finitura Pannello',
+    'C_FINPIANO-Finitura piano',
+    'C_FINPTAV-Finitura Piano Tavolo'
+]
+
+
+
+
+
+
+
+
+
 zsd67 = zsd67[colonne_keep].copy()
 
 # Pulizia colonne colore: rimuove "ZZ_Non Definito" e spazi prima di unire
@@ -80,13 +96,62 @@ for c in colonne_colore:
         .replace({'nan': '', 'None': '', 'ZZ_Non Definito': ''})
     )
 
+
 # Costruisce la colonna Colore unendo i valori non vuoti (senza duplicati)
 zsd67['Colore'] = zsd67[colonne_colore].apply(
     lambda r: ' | '.join(dict.fromkeys([v for v in r.tolist() if v])),
     axis=1
 )
 
-zsd67 = zsd67.drop(columns=colonne_colore)
+
+for f in colonne_finitura:
+    zsd67[f] = (
+        zsd67[f]
+        .fillna('')
+        .astype(str)
+        .str.strip()
+        .replace({'nan': '', 'None': ''})
+    )   
+
+zsd67['Finitura'] = zsd67[colonne_finitura].apply(
+    lambda r: ' | '.join(dict.fromkeys([v for v in r.tolist() if v])),
+    axis=1
+)   
+
+
+
+
+zsd67 = zsd67.drop(columns=colonne_colore + colonne_finitura)
+
+ordine_col=[
+'Materiale',
+'Descrizione mat.',
+'UM',
+'Quantità',
+'Valore netto',
+'Tp.Doc',
+'Numero',
+'Posizione',
+'Data documento',
+'Data consegna',
+'Numero OdV',
+'Pos. OdV',
+'Dt. produzione',
+'Colore',
+'Finitura',
+'C_PROFPIANO-Profilo piano',
+'C_MATPROFALZ-Materiale profilo alzatina',
+'C_SPESSCH-Spessore schienale',
+'C_MODPTAV-Modello Piano Tavolo',
+'C_LAVPB03-Addebito lavabo integrato',
+'C_EL1MONT-Elettrodomestico montato',
+'C_EL2MONT-Secondo Elettrodom. montato',
+'Intestatario'
+]
+
+zsd67 = zsd67[ordine_col].copy()
+
+
 
 st.dataframe(zsd67)
 dp.scarica_excel(zsd67, 'zsd67_elaborato.xlsx')
