@@ -82,7 +82,7 @@ colonne_finitura = [
 
 
 
-
+colonne_keep = [c for c in colonne_keep if c in zsd67.columns]
 
 zsd67 = zsd67[colonne_keep].copy()
 
@@ -149,6 +149,7 @@ ordine_col=[
 'Intestatario'
 ]
 
+ordine_col = [c for c in ordine_col if c in zsd67.columns]
 zsd67 = zsd67[ordine_col].copy()
 
 
