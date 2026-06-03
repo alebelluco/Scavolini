@@ -83,6 +83,8 @@ colonne_finitura = [
 
 
 colonne_keep = [c for c in colonne_keep if c in zsd67.columns]
+colonne_colore = [c for c in colonne_colore if c in zsd67.columns]
+colonne_finitura = [c for c in colonne_finitura if c in zsd67.columns]
 
 zsd67 = zsd67[colonne_keep].copy()
 
